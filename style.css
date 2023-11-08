@@ -1,0 +1,72 @@
+*{
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body{
+  height: 100vh;
+  background-image: url("https://picsum.photos/id/685/1920/1080");
+  background-size: cover;
+}
+
+.container{
+  height: 100%;
+}
+
+.input-group {
+  width: 75%;
+}
+
+.list-group {
+  height: 200px;
+  width: 75%;
+  overflow-y: auto;
+}
+
+.total-list h5{
+  margin-bottom: 0;
+  font-size: 15px;
+}
+
+li .fa-trash-can{
+  cursor: pointer;
+}
+
+.btn-point{
+  border: none;
+  color: white;
+}
+
+
+.btn-pro1 {
+  border-radius: 100%;
+  width: 15px;
+  height: 15px;
+  background-color: red;
+  border: none;
+ 
+}
+
+.btn-pro2 {
+  border-radius: 100%;
+  width: 15px;
+  height: 15px;
+  background-color: yellow;
+  border: none;
+
+}
+
+.btn-pro3 {
+  border-radius: 100%;
+  width: 15px;
+  height: 15px;
+  background-color: green;
+  border: none;
+ 
+}
+
+.btn-remove{
+  color: red;
+  border: none;
+  background-color: transparent;
+}
