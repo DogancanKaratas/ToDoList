@@ -39,18 +39,16 @@ document.querySelector(".todo-btn").addEventListener("click", (e) => {
 </div>`;
   listGroups.insertBefore(newTodoItem, firstListItem);
   input.value = "";
-  listGroups.style.display="block"
- 
+  listGroups.style.display = "block";
 });
-
 
 input.addEventListener("keyup", (event) => {
   if (event.keyCode === 13) {
     if (input.value.trim() !== "") {
       document.querySelector(".todo-btn").click();
-    }   }
+    }
+  }
 });
-
 
 listGroups.addEventListener("click", (event) => {
   if (event.target.closest(".btn-remove")) {
@@ -63,70 +61,110 @@ listGroups.addEventListener("click", (event) => {
   }
 });
 
+document.querySelector(".list-groups").addEventListener("click", (e) => {
+  const target = e.target;
+
+  if (target.classList.contains("btn-pro1")) {
+    const listItem = target.closest(".list-group-item");
+
+    if (listItem) {
+      // Önce mevcut rengi kaldır
+      listItem.classList.remove("bg-warning", "bg-success"); // Diğer renkleri kaldırabilirsiniz
+
+      // Seçilen rengi ekle
+      listItem.classList.add("bg-danger"); // Kırmızı rengi ekler
+      listItem
+        .querySelector(".form-check-label")
+        .classList.remove("text-warning", "text-success"); // Diğer renkleri kaldırabilirsiniz
+      listItem.querySelector(".form-check-label").classList.add("text-danger"); // Kırmızı renk ekler
+    }
+  } else if (target.classList.contains("btn-pro2")) {
+    const listItem = target.closest(".list-group-item");
+
+    if (listItem) {
+      listItem.classList.remove("bg-danger", "bg-success");
+      listItem.classList.add("bg-warning");
+      listItem
+        .querySelector(".form-check-label")
+        .classList.remove("text-danger", "text-success");
+      listItem.querySelector(".form-check-label").classList.add("text-warning");
+    }
+  } else if (target.classList.contains("btn-pro3")) {
+    const listItem = target.closest(".list-group-item");
+
+    if (listItem) {
+      listItem.classList.remove("bg-danger", "bg-warning");
+      listItem.classList.add("bg-success");
+      listItem
+        .querySelector(".form-check-label")
+        .classList.remove("text-danger", "text-warning");
+      listItem.querySelector(".form-check-label").classList.add("text-success");
+    }
+  }
+});
+
+document.querySelector(".list-groups").addEventListener("click", (e) => {
+  const target = e.target;
+
+  if (target.classList.contains("form-check-input")) {
+    const listItem = target.closest(".list-group-item");
+
+    if (listItem) {
+      const label = listItem.querySelector("label");
+      label.classList.toggle("text-decoration-line-through");
+    }
+  }
+});
 
 
-// const todoListContainer = document.querySelector(".list-container");
 
-// //-------------------------- todo ekleme işlemi--------
+// ?
 
-// document.querySelector(".todo-btn").addEventListener("click", (element) => {
-//   const todoText = input.value.trim().toUpperCase();
-//   const dinamicId = new Date().getTime();
-//   if (todoText === "") {
-//     //  add alert
-//     const alert = `
-// <div class="alert alert-danger">Lütfen Boş bırakmayın</div>
-// `;
+document.querySelector(".list-groups").addEventListener("click", (event) => {
+  if (event.target.classList.contains("form-check-input")) {
+    const pendingSpan = document.querySelector(".pending span");
+    const compSpan = document.querySelector(".comp span");
 
-//     todoListContainer.insertAdjacentHTML("beforebegin", alert);
-//     setTimeout(() => {
-//       document.querySelectorAll(".alert").forEach((alert) => {
-//         alert.remove();
-//       });
-//     }, 2000);
-//     return;
-//   }
+    const liElement = event.target.closest("li");
+    if (liElement) {
+      if (event.target.checked) {
+        pendingSpan.textContent = parseInt(pendingSpan.textContent) - 1;
+        compSpan.textContent = parseInt(compSpan.textContent) + 1;
+      } else {
+        pendingSpan.textContent = parseInt(pendingSpan.textContent) + 1;
+        compSpan.textContent = parseInt(compSpan.textContent) - 1;
+      }
+    }
+  }
+});
 
-//   const newTodoItem = document.createElement("li");
-//   newTodoItem.classList.add(
-//     "list-group-item",
-//     "d-flex",
-//     "justify-content-between",
-//     "align-items-center"
-//   );
+document.querySelector(".list-groups").addEventListener("click", (event) => {
+  if (event.target.classList.contains("btn-remove")) {
+    const liElement = event.target.closest("li");
+    if (liElement) {
+      liElement.remove();
+      updateItemCount();
+    }
+  }
+});
 
-//   newTodoItem.innerHTML = `
-// <div>
-//   <input class="form-check-input me-1" type="checkbox" value="" id="${todoText}-${dinamicId}">
-//   <label class="form-check-label" for="${todoText}-${dinamicId}">${todoText}</label>
-// </div>
-// <i class="fa-solid fa-trash-can  "></i>
-// `;
+document.querySelector(".todo-btn").addEventListener("click", () => {
+  const allSpan = document.querySelector(".all span");
+  const pendingSpan = document.querySelector(".pending span");
 
-//   todoListContainer.appendChild(newTodoItem);
+  allSpan.textContent = parseInt(allSpan.textContent) + 1;
+  pendingSpan.textContent = parseInt(pendingSpan.textContent) + 1;
+});
 
-//   input.value = "";
-//   todoListContainer.style.display = "block";
-// });
-// //------------------------------------ todo ekleme işlemi-------------------
+function updateItemCount() {
+  const liElements = document.querySelectorAll(".list-groups ul");
+  const allSpan = document.querySelector(".all span");
+  const pendingSpan = document.querySelector(".pending span");
+  const compSpan = document.querySelector(".comp span");
 
-// // enter'a basınca ekleme işlemi
-// input.addEventListener("keyup", (event) => {
-//   if (event.keyCode === 13) {
-//     if (input.value.trim() !== "") {
-//       document.querySelector(".todo-btn").click();
-//     }
-//   }
-// });
+  allSpan.textContent = liElements.length;
+  pendingSpan.textContent = liElements.length;
+  compSpan.textContent =0
+    
+}
 
-// // ---------------------- todo silme işlemi----------------
-// todoListContainer.addEventListener("click", (event) => {
-//   if (event.target.closest(".fa-trash-can")) {
-//     console.log("silme işlemi");
-//     event.target.closest(".list-group-item").remove();
-
-//     if (todoListContainer.children.length === 0) {
-//       todoListContainer.style.display = "none";
-//     }
-//   }
-// });
